@@ -85,20 +85,52 @@ export const useFetch=()=>{
 
 // Bilgi silme
 export const DeleteUser=(id)=>{
-        const db = getDatabase();
-        const userRef=ref(db,"baglanti");
-        remove(ref(db,"baglanti/"+id))
+        // const db = getDatabase();
+        // const userRef=ref(db,"baglanti");
+        // remove(ref(db,"baglanti/"+id))
 
-        Toastify("Kullanıcı bilgisi silindi")
-}
+        fetch("http://127.0.0.1:8000/api/contact/" + id + "/", {method:"DELETE"})
+        .then((response)=>response.text())
+        .then((result)=>{
+            console.log(result);
+            updateContacts();
+        })
+        .catch((error)=> console.log("error", error));
+
+        Toastify("Kullanıcı bilgisi silindi");
+};
 
 // Bilgi Değiştirme
 
 export const EditUser=(info)=>{
-    const db = getDatabase();
-    const updates = {};
+    // const db = getDatabase();
+    // const updates = {};
 
-    updates["baglanti/"+info.id]=info;
-    return update(ref(db),updates);
+    // updates["baglanti/"+info.id]=info;
+    // return update(ref(db),updates);
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+        username:info.username,
+        phoneNumber : info.phoneNumber,
+        gender : info.gender,
+    });
+
+    const requestOptions = { 
+        method :"POST",
+        headers: myHeaders,
+        body: raw,
+        redirect : "follow",
+    };
+    fetch("http://127.0.0.1:8000/api/contact/" + info.id + "/" , requestOptions)
+    .then((response)=>response.text())
+    .then((result)=> {
+        console.log(result);
+        updateContacts()
+    })
+    .catch((error)=>console.log("error", error));
+
 
 }
