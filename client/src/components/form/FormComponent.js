@@ -87,9 +87,9 @@ const FormComponent = ({info,setInfo,handleFormSubmit}) => {
                 value={info.gender}
                 onChange={handleChange}
               >
-                <MenuItem value="Female">Female</MenuItem>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
+                <MenuItem value="F">Female</MenuItem>
+                <MenuItem value="M">Male</MenuItem>
+                <MenuItem value="O">Other</MenuItem>
               </Select>
             </FormControl>
             <Button variant="contained" type="submit" value="Submit">
